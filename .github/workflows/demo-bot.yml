@@ -1,0 +1,34 @@
+name: demo-bot
+# Demo only: a second identity (github-actions[bot]) that opens review-requested PRs and posts reviews.
+on:
+  workflow_dispatch:
+    inputs:
+      action: {description: "open_pr | approve | request_changes", required: true}
+      branch: {description: "head branch for open_pr", required: false, default: ""}
+      title: {required: false, default: ""}
+      body: {required: false, default: ""}
+      reviewer: {required: false, default: ""}
+      pr: {description: "PR number for approve and request_changes", required: false, default: ""}
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  act:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ACTION: ${{ inputs.action }}
+      BRANCH: ${{ inputs.branch }}
+      TITLE: ${{ inputs.title }}
+      BODY: ${{ inputs.body }}
+      REVIEWER: ${{ inputs.reviewer }}
+      PR: ${{ inputs.pr }}
+    steps:
+      - run: |
+          case "$ACTION" in
+            open_pr) gh pr create --head "$BRANCH" --base main --title "$TITLE" --body "$BODY" --reviewer "$REVIEWER" ;;
+            approve) gh pr review "$PR" --approve --body "$BODY" ;;
+            request_changes) gh pr review "$PR" --request-changes --body "$BODY" ;;
+            *) echo "unknown action: $ACTION"; exit 1 ;;
+          esac

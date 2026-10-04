@@ -1,0 +1,1 @@
+{"name": "acme-ingest-daily", "schedule": "0 30 5 * * ?", "tags": {"cost_center": "data-platform"}}
