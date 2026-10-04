@@ -1,0 +1,1 @@
+{"name": "acme-dbt-build", "schedule": "0 0 6 * * ?", "tags": {"team": "data"}}
