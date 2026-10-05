@@ -1,0 +1,1 @@
+{"name": "acme-quality-checks", "schedule": "0 0 7 * * ?", "tags": {"cost_center": "data-platform"}}
