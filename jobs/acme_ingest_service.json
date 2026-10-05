@@ -1,0 +1,1 @@
+{"name": "acme-ingest-service", "schedule": "0 */15 * * * ?", "tags": {"cost_center": "data-platform"}}
